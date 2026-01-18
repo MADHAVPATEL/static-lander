@@ -104,11 +104,13 @@
         const clickId = urlParams.get('click_id');
         const flowId = urlParams.get('flow_id');
         const prevStep = urlParams.get('prev_step');
+        const campaignId = urlParams.get('campaign_id');
         // 2. Fallback to LocalStorage (Hybrid Approach)
         if (clickId) {
             localStorage.setItem('cg_click_id', clickId);
             if (flowId) localStorage.setItem('cg_flow_id', flowId);
             if (prevStep) localStorage.setItem('cg_prev_step', prevStep);
+            if (campaignId) localStorage.setItem('cg_campaign_id', campaignId);
         } else {
             // Try to resurrect from storage if URL is clean
             const storedClickId = localStorage.getItem('cg_click_id');
@@ -120,7 +122,7 @@
         }
         // 3. Append to all Action Links
         // Change this domain to your actual tracker domain
-        const ACTION_DOMAIN = "clickgenie-ingest.madhavpatel.workers.dev"; // your worker
+        const ACTION_DOMAIN = "clickgenie-ingest.madhav-a61.workers.dev"; // your worker
         document.addEventListener("DOMContentLoaded", function () {
             const links = document.querySelectorAll('a');
             links.forEach(link => {
@@ -129,6 +131,7 @@
                     if (clickId) currentUrl.searchParams.set('click_id', clickId);
                     if (flowId) currentUrl.searchParams.set('flow_id', flowId);
                     if (prevStep) currentUrl.searchParams.set('prev_step', prevStep); // Passing current lander ID as prev_step
+                    if (campaignId) currentUrl.searchParams.set('campaign_id', campaignId);
                     link.href = currentUrl.toString();
                 }
             });
