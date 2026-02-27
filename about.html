@@ -163,6 +163,25 @@
     });
   })();
 </script> -->
-    <script src="https://ach-tracker.madhav-a61.workers.dev/lander.js" defer></script>
+    <!-- <script src="https://ach-tracker.madhav-a61.workers.dev/lander.js" defer></script> -->
+    <script>
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var clickId = params.get('click_id');
+  if (!clickId) return;
+
+  // Track lander view
+  var px = new Image();
+  px.src = 'https://track.clickdash.ai/lv/' + encodeURIComponent(clickId);
+
+  // Rewrite all CTA links to go through the tracker
+  document.addEventListener('DOMContentLoaded', function() {
+    var links = document.querySelectorAll('a[href="#offer"], a[data-ach-offer]');
+    links.forEach(function(link) {
+      link.href = 'https://track.clickdash.ai/o/' + encodeURIComponent(clickId);
+    });
+  });
+})();
+</script>
 </body>
 </html>
